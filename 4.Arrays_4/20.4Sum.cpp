@@ -1,36 +1,43 @@
 #include <bits/stdc++.h>
 
-vector<vector<int>> pairSum(vector<int> &arr, int s){
-   // Write your code here.
-   vector<vector<int>> ans;
+string fourSum(vector<int> arr, int target, int n) {
+    // Write your code here.
 
-   sort(arr.begin(),arr.end());
+    int sum = 0;
 
-   int i=0,j=arr.size()-1;
+    sort(arr.begin(),arr.end());
 
-   while(i<j)
-   {
-      int temp = arr[i]+arr[j];
+    for(int i=0;i<n;i++)
+    {
+        for(int j=i+1;j<n;j++)
+        {
+            sum = target - arr[i]-arr[j];
 
-      if(temp==s)
-      {
-         int k =j;
+            int left = j+1,right= n-1;
+            while(left<right)
+            {
+                int two_sum = arr[left]+arr[right];
 
-         while(k>i&&arr[k]==arr[j])
-         {  
-            vector<int> v;
-            v.push_back(arr[i]);
-            v.push_back(arr[k--]);
-            ans.push_back(v);
-         }
-         i++;
-      }
-      else if(temp<s)
-      {
-         i++;
-      }
-      else j--;
-   }
+                if(sum==two_sum)
+                {
+                    return "Yes";
+                }
+                if(two_sum<sum)
+                {
+                    while(left<right && arr[left]==arr[left+1])
+                        left++;
+                    left++;
+                }
+                else
+                {
+                    while(left<right && arr[right-1]==arr[right])
+                        right--;
+                    right--;
+                }
+            }
 
-   return ans;
+        }
+    }
+
+    return "No";
 }
