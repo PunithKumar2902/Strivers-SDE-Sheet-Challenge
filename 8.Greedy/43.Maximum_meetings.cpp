@@ -2,9 +2,12 @@
 
 static bool comp (pair<int,pair<int,int>> p,pair<int,pair<int,int>> q)
 {
-    if(p.first==q.first) p.second.second<q.second.second;
+    if(p.first<q.first) return true;
+    if(p.first>q.first) return false;
 
-    return p.first<q.first;
+    if(p.second.second<q.second.second) return true;
+
+    return false;
 }
 
 vector<int> maximumMeetings(vector<int> &start, vector<int> &end) {
