@@ -1,5 +1,5 @@
-
-
+#include<bits/stdc++.h>
+using namespace std;
 int calculateMinPatforms(int at[], int dt[], int n) {
     // Write your code here.
 
@@ -14,7 +14,7 @@ int calculateMinPatforms(int at[], int dt[], int n) {
     {
         if(at[i]<=dt[j])
         {
-            platform++;
+            platforms++;
             i++;
         }
         else 
@@ -24,5 +24,5 @@ int calculateMinPatforms(int at[], int dt[], int n) {
         }
         maxi = max(maxi,platforms);
     }
-    result maxi;
+    return maxi;
 }
