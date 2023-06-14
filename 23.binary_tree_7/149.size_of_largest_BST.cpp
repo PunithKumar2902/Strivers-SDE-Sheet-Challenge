@@ -1,66 +1,64 @@
 #include <bits/stdc++.h> 
 /************************************************************
 
-    Following is the TreeNode class structure
-
+    Following is the Binary Tree node structure
+    
     template <typename T>
     class TreeNode {
-       public:
+        public :
         T data;
         TreeNode<T> *left;
         TreeNode<T> *right;
 
         TreeNode(T data) {
-            this->data = data;
+            this -> data = data;
             left = NULL;
             right = NULL;
+        }
+
+        ~TreeNode() {
+            if(left)
+                delete left;
+            if(right)
+                delete right;
         }
     };
 
 ************************************************************/
+struct Node{
+    int maxi,mini,cnt;
 
-class BSTiterator
-{
-    stack<TreeNode<int>*> st;
-
-    void rev_inorder(TreeNode<int> *root)
+    Node(int x,int y,int z)
     {
-        if(!root) return;
-
-        rev_inorder(root->right);
-        st.push(root);
-        rev_inorder(root->left);
+        cnt = z;
+        mini = x;
+        maxi = y;
     }
 
-    public:
-    BSTiterator(TreeNode<int> *root)
-    {
-        // write your code here
-        rev_inorder(root);
-    }
-
-    int next()
-    {
-        // write your code here
-        int x = st.top()->data;
-        st.pop();
-
-        return x;
-    }
-
-    bool hasNext()
-    {
-        // write your code here
-        return !st.empty();
-    }
 };
 
+Node check(TreeNode<int>* root)
+{
+    if(!root) return Node(INT_MAX,INT_MIN,0);
 
-/*
-    Your BSTIterator object will be instantiated and called as such:
-    BSTIterator iterator(root);
-    while(iterator.hasNext())
+    Node left = check(root->left);
+    Node right = check(root->right);
+    
+    int x = root->data;
+    if(x>left.maxi && x<right.mini)
     {
-       print(iterator.next());
+        return Node(min(left.mini,min(x,right.mini)),max(left.maxi,max(x,right.maxi))
+        ,1+left.cnt+right.cnt);
     }
-*/
+    
+    return Node(INT_MIN,INT_MAX,max(left.cnt,right.cnt));
+}
+
+
+int largestBST(TreeNode<int>* root) 
+{
+    // Write your code here.
+    
+    Node n = check(root);
+    return n.cnt;
+}
